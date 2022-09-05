@@ -1,6 +1,6 @@
 import Layout from '../components/Layout'
 import { GetStaticProps } from 'next'
-// import { getAllTasksData } from '../lib/fetch'
+import { getAllTasksData } from '../lib/fetch'
 import useSWR from 'swr'
 import axios from 'axios'
 import { TASK } from '../types/Types'
@@ -17,6 +17,7 @@ const axiosFetcher = async () => {
 }
 
 const TaskPage: React.FC<STATICPROPS> = ({ staticTasks }) => {
+  console.log(staticTasks)
   const { data: tasks, error } = useSWR('todosFetch', axiosFetcher, {
     fallbackData: staticTasks,
     revalidateOnMount: true,
@@ -40,9 +41,9 @@ const TaskPage: React.FC<STATICPROPS> = ({ staticTasks }) => {
 }
 export default TaskPage
 
-// export const getStaticProps: GetStaticProps = async () => {
-//   const staticTasks = await getAllTasksData()
-//   return {
-//     props: { staticTasks },
-//   }
-// }
+export const getStaticProps: GetStaticProps = async () => {
+  const staticTasks = await getAllTasksData()
+  return {
+    props: { staticTasks },
+  }
+}
